@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لأجمل غمازة في الدنيا 🌸</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Reem+Kufi:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --soft-pink: #ffdae9;
+            --main-pink: #ff85a2;
+            --soft-purple: #f3e5f5;
+            --accent-purple: #9c27b0;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--soft-pink);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* الخلفية المتحركة */
+        .background-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-emoji {
+            position: absolute;
+            font-size: 20px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* الصفحات */
+        .page {
+            display: none;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 133, 162, 0.2);
+            border: 2px solid white;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h1, h2 {
+            color: var(--accent-purple);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .glow-text {
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 5px #fff, 0 0 10px #ff85a2; }
+            to { text-shadow: 0 0 15px #fff, 0 0 25px #ff85a2; }
+        }
+
+        /* الأزرار */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-weight: bold;
+        }
+
+        .btn-yes { background: var(--main-pink); color: white; }
+        .btn-no { background: #eee; color: #777; position: relative; }
+
+        button:active { transform: scale(0.9); }
+        .shake:hover { animation: shake 0.5s; }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(5px); }
+            50% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* المرآة */
+        .mirror-container {
+            width: 150px;
+            height: 200px;
+            background: linear-gradient(135deg, #e0f7fa, #80deea);
+            border: 8px solid #f3e5f5;
+            border-radius: 100px 100px 20px 20px;
+            margin: 20px auto;
+            position: relative;
+            box-shadow: 0 0 20px rgba(255,255,255,0.8);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 4rem;
+        }
+
+        .mirror-shine {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%); }
+            100% { transform: translateX(100%) translateY(100%); }
+        }
+
+        /* الملاهي */
+        .ferris-wheel {
+            font-size: 3rem;
+            animation: rotate 10s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .typing-text::after {
+            content: "|";
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+    </style>
+</head>
+<body>
+
+    <div class="background-elements" id="bg"></div>
+
+    <!-- الصفحة الأولى -->
+    <div class="page active" id="page1">
+        <h2 id="typewriter" class="glow-text"></h2>
+        <div id="question" style="display:none">
+            <h1 style="font-size: 1.8rem; margin-top: 20px;">هل انتي مستعدة لرحلة السعادة؟ 💖</h1>
+            <div class="btn-container">
+                <button class="btn-yes shake" onclick="nextPage(2, true)">💗 نعم</button>
+                <button class="btn-no" id="noBtn" onmouseover="moveNo()">🙈 لا</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- الصفحة الثانية -->
+    <div class="page" id="page2">
+        <h1 class="glow-text">أحسنتِ الاختيار 💖</h1>
+        <div style="font-size: 4rem; margin: 20px;">😘</div>
+        <h2>يا جميلة الجميلين و أميرة الأميرات 👑</h2>
+        <button class="btn-yes" onclick="nextPage(3)">✨ التالي</button>
+    </div>
+
+    <!-- الصفحة الثالثة -->
+    <div class="page" id="page3">
+        <div class="mirror-container">
+            <div class="mirror-shine"></div>
+            🪞
+        </div>
+        <p style="font-size: 1.2rem; margin-bottom: 20px;">اذا مو مصدقة انك جميلة الجميلين هي جبتلك مراية 🤭<br>شايفة كيف حلوة يا جمالك لمدوخانا فيه 💕</p>
+        <button class="btn-yes" onclick="nextPage(4)">✨ التالي</button>
+    </div>
+
+    <!-- الصفحة الرابعة -->
+    <div class="page" id="page4">
+        <div style="font-size: 3rem;">☁️🌸☁️</div>
+        <h2>ليش مزعلة حالك و تضايقي.. <br>والله كلشي حيمر و تقولي يااه الحمد الله على العوض 💖</h2>
+        <button class="btn-yes" onclick="nextPage(5)">✨ التالي</button>
+    </div>
+
+    <!-- الصفحة الخامسة -->
+    <div class="page" id="page5">
+        <div style="font-size: 3rem;">✨⭐✨</div>
+        <h2>صحيح مرحلة صعبة.. <br>بس انتي قوية و حتعديها.. <br>خليكي واثقة بربنا 🤍</h2>
+        <button class="btn-yes" onclick="nextPage(6)">✨ التالي</button>
+    </div>
+
+    <!-- الصفحة السادسة -->
+    <div class="page" id="page6">
+        <div class="ferris-wheel">🎡</div>
+        <h2>و بما انك مضايقة حطلعك عالملاهي 🎠</h2>
+        <p class="glow-text" style="font-size: 1.3rem;">و حجيبلك غزل بنات و شوكولا 🍭🍫</p>
+        <button class="btn-yes" onclick="nextPage(7)">✨ التالي</button>
+    </div>
+
+    <!-- الصفحة السابعة -->
+    <div class="page" id="page7">
+        <div style="font-size: 2.5rem; margin-bottom: 20px;">🍩🍫🍰🍬🧁</div>
+        <h2>انتي بس روقي و كلي.. <br>و خليكي مبسوطة.. <br>عشان الدنيا تنبسط معك 🤍✨</h2>
+        <button class="btn-yes" onclick="nextPage(8, true)">✨ التالي</button>
+    </div>
+
+    <!-- الصفحة الأخيرة -->
+    <div class="page" id="page8">
+        <h2>لا تزعلي حالك مهما يصير.. <br>و تصعب حتمر.. <br>و نحن كلنا معك و جنبك.. <br>سندك دايما ❤️🥰🥰</h2>
+        <hr style="border: 0; height: 1px; background: #ff85a2; margin: 20px 0;">
+        <h2 class="glow-text">ابتسامتك أحلى من الدنيا كلها 🌸</h2>
+        <p style="font-size: 0.8rem; color: #999;">صنع بكل حب لأجلك ✨</p>
+    </div>
+
+    <!-- عناصر الصوت (اختياري - المتصفحات تمنع التشغيل التلقائي بدون تفاعل) -->
+    <audio id="clickSound" src="https://www.soundjay.com/buttons/sounds/button-37a.mp3"></audio>
+
+    <script>
+        // تأثير الخلفية المتحركة
+        function createBackground() {
+            const bg = document.getElementById('bg');
+            const emojis = ['🌸', '💖', '✨', '☁️', '🌷', '🤍'];
+            setInterval(() => {
+                const el = document.createElement('div');
+                el.className = 'floating-emoji';
+                el.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                bg.appendChild(el);
+                setTimeout(() => el.remove(), 5000);
+            }, 300);
+        }
+
+        // تأثير الكتابة
+        const text = "بما أنو الحلوة زعلانة قررت أني راضيها و بفرحها عشان ما يلبقلها غير الضحك هي و غمازتها الحلوة ☺️";
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                document.getElementById("typewriter").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            } else {
+                document.getElementById("question").style.display = "block";
+            }
+        }
+
+        // تحريك زر لا
+        function moveNo() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+            playSound();
+        }
+
+        // الانتقال بين الصفحات
+        function nextPage(num, celebrate = false) {
+            playSound();
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page' + num).classList.add('active');
+            
+            if (celebrate) {
+                const count = 200, defaults = { origin: { y: 0.7 } };
+                function fire(particleRatio, opts) {
+                    confetti(Object.assign({}, defaults, opts, {
+                        particleCount: Math.floor(count * particleRatio)
+                    }));
+                }
+                fire(0.25, { spread: 26, startVelocity: 55, });
+                fire(0.2, { spread: 60, });
+                fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+                fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+                fire(0.1, { spread: 120, startVelocity: 45, });
+            }
+        }
+
+        function playSound() {
+            const audio = document.getElementById('clickSound');
+            audio.currentTime = 0;
+            audio.play().catch(() => {});
+        }
+
+        // بدء التشغيل
+        window.onload = () => {
+            createBackground();
+            typeWriter();
+        };
+    </script>
+</body>
+</html>
